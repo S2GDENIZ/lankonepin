@@ -13,23 +13,24 @@ body {
   min-height:100vh;
   overflow-x:hidden;
   color:#fff;
-  background:#0a0015;
   position:relative;
+  transition:0.5s;
 }
 
-/* ANIMATED NEON BACKGROUND */
+/* BACKGROUND */
 #background {
   position:fixed;
   top:0; left:0; width:100%; height:100%; z-index:-1;
   overflow:hidden;
+  transition:0.5s;
 }
 .neon-dot {
   position:absolute;
   width:6px; height:6px;
   border-radius:50%;
-  background: linear-gradient(45deg,#ff0c0c,#ff4c4c,#e7000c);
-  box-shadow: 0 0 10px #ff0c0c, 0 0 20px #ff4c4c, 0 0 30px #e7000c;
+  box-shadow: 0 0 10px, 0 0 20px, 0 0 30px;
   animation: float 10s linear infinite;
+  transition:0.5s;
 }
 @keyframes float {
   0% { transform: translateY(0) translateX(0); opacity:0; }
@@ -52,18 +53,24 @@ header {
 }
 header img { width:70px; border-radius:10px; transition:0.3s; }
 header h1 { font-size:2rem; text-transform:uppercase; letter-spacing:2px; color:#ff0c0c; }
-#cart {
+#cart { position:absolute; right:20px; font-size:18px; cursor:pointer; background:#e7000c; color:#fff; padding:5px 10px; border-radius:6px; transition:0.3s; }
+#cart:hover { background:#ff4c4c; }
+
+/* FON CHANGE BUTTON */
+#toggleBg {
   position:absolute;
-  right:20px;
-  font-size:18px;
-  cursor:pointer;
+  left:20px;
+  font-size:14px;
+  padding:5px 10px;
+  border:none;
+  border-radius:6px;
   background:#e7000c;
   color:#fff;
-  padding:5px 10px;
-  border-radius:6px;
+  cursor:pointer;
   transition:0.3s;
+  z-index:15;
 }
-#cart:hover { background:#ff4c4c; }
+#toggleBg:hover { background:#ff4c4c; }
 
 /* MODERN CARD STYLE */
 .container {
@@ -83,10 +90,7 @@ header h1 { font-size:2rem; text-transform:uppercase; letter-spacing:2px; color:
   transition:0.4s;
   backdrop-filter: blur(5px);
 }
-.card:hover { 
-  transform: translateY(-10px); 
-  box-shadow:0 0 25px #e90316, 0 0 50px #ff0c0c70;
-}
+.card:hover { transform: translateY(-10px); box-shadow:0 0 25px #e90316,0 0 50px #ff0c0c70; }
 .card img { width:100%; border-radius:12px; margin-bottom:12px; transition:0.3s; }
 .card img:hover { transform: scale(1.05); }
 .card h2 { font-size:1.4rem; margin-bottom:8px; color:#ff0c0c; }
@@ -104,11 +108,8 @@ header h1 { font-size:2rem; text-transform:uppercase; letter-spacing:2px; color:
 }
 .card button:hover { background:#fff; color:#ff4c4c; }
 
-/* VIP EFFECT (16000 UC) */
-.card.vip {
-  border:3px solid gold;
-  box-shadow:0 0 30px gold,0 0 60px gold;
-}
+/* VIP EFFECT */
+.card.vip { border:3px solid gold; box-shadow:0 0 30px gold,0 0 60px gold; }
 
 /* FOOTER */
 footer { text-align:center; padding:20px; margin-top:40px; background: linear-gradient(90deg,#111,#222); border-top:2px solid #e7000c; }
@@ -117,17 +118,10 @@ footer { text-align:center; padding:20px; margin-top:40px; background: linear-gr
 #cartPopup {
   display:none;
   position:fixed;
-  top:70px;
-  right:20px;
-  width:320px;
-  max-height:500px;
+  top:70px; right:20px; width:320px; max-height:500px;
   background: rgba(255,255,255,0.95);
-  color:#000;
-  border-radius:15px;
-  box-shadow:0 0 25px rgba(0,0,0,0.5);
-  overflow-y:auto;
-  z-index:100;
-  padding:15px;
+  color:#000; border-radius:15px; box-shadow:0 0 25px rgba(0,0,0,0.5);
+  overflow-y:auto; z-index:100; padding:15px;
 }
 #cartPopup h3 { margin-bottom:10px; color:#e7000c; text-align:center; }
 .cart-item { display:flex; justify-content:space-between; margin-bottom:10px; padding:5px; border-bottom:1px solid #ddd; align-items:center; }
@@ -141,6 +135,7 @@ footer { text-align:center; padding:20px; margin-top:40px; background: linear-gr
 <body>
 
 <div id="background"></div>
+<button id="toggleBg">Arxa fon dəyiş</button>
 
 <header>
   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s" alt="Logo">
@@ -157,47 +152,20 @@ footer { text-align:center; padding:20px; margin-top:40px; background: linear-gr
 
 <div class="container">
 <!-- Pakətlər -->
-<div class="card">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s">
-  <h2>60 UC</h2><p>Kiçik paket</p><div class="price">1.87</div>
-  <button onclick="addToCart('60 UC',1.87)">Satın Al</button>
-</div>
-<div class="card">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s">
-  <h2>325 UC</h2><p>Orta paket</p><div class="price">8.20</div>
-  <button onclick="addToCart('325 UC',8.20)">Satın Al</button>
-</div>
-<div class="card">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s">
-  <h2>660 UC</h2><p>Böyük paket</p><div class="price">16.11</div>
-  <button onclick="addToCart('660 UC',16.11)">Satın Al</button>
-</div>
-<div class="card">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s">
-  <h2>1800 UC</h2><p>Populyar paket</p><div class="price">41.20</div>
-  <button onclick="addToCart('1800 UC',41.20)">Satın Al</button>
-</div>
-<div class="card">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s">
-  <h2>3850 UC</h2><p>Premium paket</p><div class="price">83.90</div>
-  <button onclick="addToCart('3850 UC',83.90)">Satın Al</button>
-</div>
-<div class="card">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s">
-  <h2>8100 UC</h2><p>Ən böyük paket</p><div class="price">163.04</div>
-  <button onclick="addToCart('8100 UC',163.04)">Satın Al</button>
-</div>
-<div class="card vip">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s">
-  <h2>16000 UC</h2><p>Ultra paket</p><div class="price">334.07</div>
-  <button onclick="addToCart('16000 UC',334.07)">Satın Al</button>
-</div>
+<div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>60 UC</h2><p>Kiçik paket</p><div class="price">1.87</div><button onclick="addToCart('60 UC',1.87)">Satın Al</button></div>
+<div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>325 UC</h2><p>Orta paket</p><div class="price">8.20</div><button onclick="addToCart('325 UC',8.20)">Satın Al</button></div>
+<div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>660 UC</h2><p>Böyük paket</p><div class="price">16.11</div><button onclick="addToCart('660 UC',16.11)">Satın Al</button></div>
+<div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>1800 UC</h2><p>Populyar paket</p><div class="price">41.20</div><button onclick="addToCart('1800 UC',41.20)">Satın Al</button></div>
+<div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>3850 UC</h2><p>Premium paket</p><div class="price">83.90</div><button onclick="addToCart('3850 UC',83.90)">Satın Al</button></div>
+<div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>8100 UC</h2><p>Ən böyük paket</p><div class="price">163.04</div><button onclick="addToCart('8100 UC',163.04)">Satın Al</button></div>
+<div class="card vip"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>16000 UC</h2><p>Ultra paket</p><div class="price">334.07</div><button onclick="addToCart('16000 UC',334.07)">Satın Al</button></div>
 </div>
 
 <footer>© 2026 LANKONEPIN</footer>
 
 <script>
-// BACKGROUND NEON DOTS
+// BACKGROUND DOTS CREATION
+let dots = [];
 for(let i=0;i<60;i++){
   let dot = document.createElement("div");
   dot.className="neon-dot";
@@ -207,6 +175,7 @@ for(let i=0;i<60;i++){
   dot.style.width=(2+Math.random()*5)+"px";
   dot.style.height=(2+Math.random()*5)+"px";
   document.getElementById("background").appendChild(dot);
+  dots.push(dot);
 }
 
 // CART SYSTEM
@@ -219,39 +188,29 @@ function addToCart(name, price){
   document.getElementById("cart").innerText = `🛒 ${cart.length}`;
   updateCartPopup();
 }
-
 function removeItem(index){
   cart.splice(index,1);
   localStorage.setItem("cart", JSON.stringify(cart));
   document.getElementById("cart").innerText = `🛒 ${cart.length}`;
   updateCartPopup();
 }
-
 function updateCartPopup(){
   let cartItemsDiv = document.getElementById("cartItems");
   cartItemsDiv.innerHTML = "";
   let total = 0;
-
   cart.forEach((item,index)=>{
     total += item.price;
     let div = document.createElement("div");
     div.className = "cart-item";
-    div.innerHTML = `
-      <span>${item.name}</span>
-      <span>${item.price.toFixed(2)} AZN</span>
-      <button onclick="removeItem(${index})">X</button>
-    `;
+    div.innerHTML = `<span>${item.name}</span><span>${item.price.toFixed(2)} AZN</span><button onclick="removeItem(${index})">X</button>`;
     cartItemsDiv.appendChild(div);
   });
-
   document.getElementById("total").innerText = `Ümumi: ${total.toFixed(2)} AZN`;
 }
-
 document.getElementById("cart").addEventListener("click", ()=>{
   let popup = document.getElementById("cartPopup");
   popup.style.display = popup.style.display === "block" ? "none" : "block";
 });
-
 document.getElementById("checkoutBtn").addEventListener("click", ()=>{
   if(cart.length===0){ alert("Səbət boşdur!"); return; }
   let text = "Salam, sifariş:\n";
@@ -260,8 +219,27 @@ document.getElementById("checkoutBtn").addEventListener("click", ()=>{
   text += `Toplam: ${total.toFixed(2)} AZN\nNomre: 0557133003`;
   window.open("https://wa.me/?text="+encodeURIComponent(text));
 });
-
 updateCartPopup();
+
+// BACKGROUND TOGGLE
+let isBlack=true;
+document.getElementById("toggleBg").addEventListener("click", ()=>{
+  isBlack = !isBlack;
+  if(isBlack){
+    document.body.style.background="#0a0015";
+    dots.forEach(dot=>{
+      dot.style.background="linear-gradient(45deg,#ff0c0c,#ff4c4c,#e7000c)";
+      dot.style.boxShadow="0 0 10px #ff0c0c,0 0 20px #ff4c4c,0 0 30px #e7000c";
+    });
+  } else {
+    document.body.style.background="#ffffff";
+    dots.forEach(dot=>{
+      dot.style.background="linear-gradient(45deg,#666,#aaa,#ddd)";
+      dot.style.boxShadow="0 0 10px #ccc,0 0 20px #bbb,0 0 30px #999";
+    });
+  }
+});
 </script>
+
 </body>
 </html>
