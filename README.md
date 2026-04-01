@@ -6,123 +6,52 @@
 <title>LANKONEPIN - PUBG Mobile UC Satış</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <style>
-/* RESET & BODY */
 * { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family: 'Orbitron', sans-serif;
-  min-height:100vh;
-  overflow-x:hidden;
-  color:#fff;
-  position:relative;
-  transition:0.5s;
-}
+body { font-family: 'Orbitron', sans-serif; min-height:100vh; overflow-x:hidden; color:#fff; position:relative; transition:0.5s; background:#0a0015; }
 
-/* BACKGROUND */
-#background {
-  position:fixed;
-  top:0; left:0; width:100%; height:100%; z-index:-1;
-  overflow:hidden;
-  transition:0.5s;
-}
-.neon-dot {
-  position:absolute;
-  width:6px; height:6px;
-  border-radius:50%;
-  box-shadow: 0 0 10px, 0 0 20px, 0 0 30px;
-  animation: float 10s linear infinite;
-  transition:0.5s;
-}
-@keyframes float {
-  0% { transform: translateY(0) translateX(0); opacity:0; }
-  50% { opacity:1; }
-  100% { transform: translateY(-120vh) translateX(50vw); opacity:0; }
-}
+/* BACKGROUND DOTS */
+#background { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; overflow:hidden; }
+.neon-dot { position:absolute; width:6px; height:6px; border-radius:50%; box-shadow: 0 0 10px, 0 0 20px, 0 0 30px; animation: float 10s linear infinite; }
+@keyframes float { 0% { transform: translateY(0) translateX(0); opacity:0; } 50% { opacity:1; } 100% { transform: translateY(-120vh) translateX(50vw); opacity:0; } }
 
 /* HEADER */
-header {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:15px;
-  padding:20px;
-  background: linear-gradient(90deg,#000,#111);
-  box-shadow:0 0 20px #ff0241;
-  position: relative;
-  z-index:10;
-  border-bottom:2px solid #e7000c;
-}
+header { display:flex; align-items:center; justify-content:center; gap:15px; padding:20px; background: linear-gradient(90deg,#000,#111); box-shadow:0 0 20px #ff0241; position: relative; z-index:10; border-bottom:2px solid #e7000c; }
 header img { width:70px; border-radius:10px; transition:0.3s; }
 header h1 { font-size:2rem; text-transform:uppercase; letter-spacing:2px; color:#ff0c0c; }
 #cart { position:absolute; right:20px; font-size:18px; cursor:pointer; background:#e7000c; color:#fff; padding:5px 10px; border-radius:6px; transition:0.3s; }
 #cart:hover { background:#ff4c4c; }
 
-/* FON CHANGE BUTTON */
-#toggleBg {
-  position:absolute;
-  left:20px;
-  font-size:14px;
-  padding:5px 10px;
-  border:none;
-  border-radius:6px;
-  background:#e7000c;
-  color:#fff;
-  cursor:pointer;
-  transition:0.3s;
-  z-index:15;
-}
+/* TOGGLE BG BUTTON */
+#toggleBg { position:absolute; left:20px; font-size:14px; padding:5px 10px; border:none; border-radius:6px; background:#e7000c; color:#fff; cursor:pointer; transition:0.3s; z-index:15; }
 #toggleBg:hover { background:#ff4c4c; }
 
-/* MODERN CARD STYLE */
-.container {
-  padding:40px 20px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:30px;
-  justify-content:center;
-}
-.card {
-  width:280px;
-  background: rgba(17,17,17,0.85);
-  border:2px solid #e7000c;
-  border-radius:20px;
-  text-align:center;
-  padding:20px;
-  transition:0.4s;
-  backdrop-filter: blur(5px);
-}
-.card:hover { transform: translateY(-10px); box-shadow:0 0 25px #e90316,0 0 50px #ff0c0c70; }
+/* CARD STYLE */
+.container { padding:40px 20px; display:flex; flex-wrap:wrap; gap:30px; justify-content:center; }
+.card { width:280px; background: rgba(17,17,17,0.85); border:2px solid #e7000c; border-radius:20px; text-align:center; padding:20px; transition:0.4s; backdrop-filter: blur(5px); }
+.card:hover { transform: translateY(-10px); }
 .card img { width:100%; border-radius:12px; margin-bottom:12px; transition:0.3s; }
 .card img:hover { transform: scale(1.05); }
 .card h2 { font-size:1.4rem; margin-bottom:8px; color:#ff0c0c; }
 .card p { font-size:1rem; margin-bottom:10px; color:#ff0707; }
 .price { font-size:1.2rem; font-weight:bold; margin-bottom:12px; }
-.card button {
-  padding:12px 20px;
-  background:#f80202;
-  border:none;
-  color:#000;
-  font-weight:bold;
-  cursor:pointer;
-  border-radius:10px;
-  transition:0.3s;
-}
+.card button { padding:12px 20px; background:#f80202; border:none; color:#000; font-weight:bold; cursor:pointer; border-radius:10px; transition:0.3s; }
 .card button:hover { background:#fff; color:#ff4c4c; }
 
-/* VIP EFFECT */
-.card.vip { border:3px solid gold; box-shadow:0 0 30px gold,0 0 60px gold; }
+/* NEON ANIMATED BORDER */
+.card.neon { animation: neonGradient 3s linear infinite; }
+@keyframes neonGradient {
+  0% { box-shadow: 0 0 15px #ff0c0c,0 0 30px #ff4c4c,0 0 45px #e7000c; border-color:#ff0c0c; }
+  25% { box-shadow: 0 0 15px #00f,0 0 30px #0ff,0 0 45px #0f0; border-color:#00f; }
+  50% { box-shadow: 0 0 15px #0ff,0 0 30px #ff0,0 0 45px #f0f; border-color:#0ff; }
+  75% { box-shadow: 0 0 15px #ff0,0 0 30px #f00,0 0 45px #00f; border-color:#ff0; }
+  100% { box-shadow: 0 0 15px #ff0c0c,0 0 30px #ff4c4c,0 0 45px #e7000c; border-color:#ff0c0c; }
+}
 
 /* FOOTER */
 footer { text-align:center; padding:20px; margin-top:40px; background: linear-gradient(90deg,#111,#222); border-top:2px solid #e7000c; }
 
 /* CART POPUP */
-#cartPopup {
-  display:none;
-  position:fixed;
-  top:70px; right:20px; width:320px; max-height:500px;
-  background: rgba(255,255,255,0.95);
-  color:#000; border-radius:15px; box-shadow:0 0 25px rgba(0,0,0,0.5);
-  overflow-y:auto; z-index:100; padding:15px;
-}
+#cartPopup { display:none; position:fixed; top:70px; right:20px; width:320px; max-height:500px; background: rgba(255,255,255,0.95); color:#000; border-radius:15px; box-shadow:0 0 25px rgba(0,0,0,0.5); overflow-y:auto; z-index:100; padding:15px; }
 #cartPopup h3 { margin-bottom:10px; color:#e7000c; text-align:center; }
 .cart-item { display:flex; justify-content:space-between; margin-bottom:10px; padding:5px; border-bottom:1px solid #ddd; align-items:center; }
 .cart-item button { background:red; color:white; border:none; border-radius:5px; padding:3px 6px; cursor:pointer; transition:0.3s; }
@@ -151,20 +80,19 @@ footer { text-align:center; padding:20px; margin-top:40px; background: linear-gr
 </div>
 
 <div class="container">
-<!-- Pakətlər -->
-<div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>60 UC</h2><p>Kiçik paket</p><div class="price">1.87</div><button onclick="addToCart('60 UC',1.87)">Satın Al</button></div>
-<div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>325 UC</h2><p>Orta paket</p><div class="price">8.20</div><button onclick="addToCart('325 UC',8.20)">Satın Al</button></div>
-<div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>660 UC</h2><p>Böyük paket</p><div class="price">16.11</div><button onclick="addToCart('660 UC',16.11)">Satın Al</button></div>
-<div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>1800 UC</h2><p>Populyar paket</p><div class="price">41.20</div><button onclick="addToCart('1800 UC',41.20)">Satın Al</button></div>
-<div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>3850 UC</h2><p>Premium paket</p><div class="price">83.90</div><button onclick="addToCart('3850 UC',83.90)">Satın Al</button></div>
-<div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>8100 UC</h2><p>Ən böyük paket</p><div class="price">163.04</div><button onclick="addToCart('8100 UC',163.04)">Satın Al</button></div>
-<div class="card vip"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>16000 UC</h2><p>Ultra paket</p><div class="price">334.07</div><button onclick="addToCart('16000 UC',334.07)">Satın Al</button></div>
+  <div class="card neon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>60 UC</h2><p>Kiçik paket</p><div class="price">1.87</div><button onclick="addToCart('60 UC',1.87)">Satın Al</button></div>
+  <div class="card neon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>325 UC</h2><p>Orta paket</p><div class="price">8.20</div><button onclick="addToCart('325 UC',8.20)">Satın Al</button></div>
+  <div class="card neon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>660 UC</h2><p>Böyük paket</p><div class="price">16.11</div><button onclick="addToCart('660 UC',16.11)">Satın Al</button></div>
+  <div class="card neon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>1800 UC</h2><p>Populyar paket</p><div class="price">41.20</div><button onclick="addToCart('1800 UC',41.20)">Satın Al</button></div>
+  <div class="card neon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>3850 UC</h2><p>Premium paket</p><div class="price">83.90</div><button onclick="addToCart('3850 UC',83.90)">Satın Al</button></div>
+  <div class="card neon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>8100 UC</h2><p>Ən böyük paket</p><div class="price">163.04</div><button onclick="addToCart('8100 UC',163.04)">Satın Al</button></div>
+  <div class="card neon vip"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s"><h2>16000 UC</h2><p>Ultra paket</p><div class="price">334.07</div><button onclick="addToCart('16000 UC',334.07)">Satın Al</button></div>
 </div>
 
 <footer>© 2026 LANKONEPIN</footer>
 
 <script>
-// BACKGROUND DOTS CREATION
+// CREATE BACKGROUND DOTS
 let dots = [];
 for(let i=0;i<60;i++){
   let dot = document.createElement("div");
@@ -188,12 +116,14 @@ function addToCart(name, price){
   document.getElementById("cart").innerText = `🛒 ${cart.length}`;
   updateCartPopup();
 }
+
 function removeItem(index){
   cart.splice(index,1);
   localStorage.setItem("cart", JSON.stringify(cart));
   document.getElementById("cart").innerText = `🛒 ${cart.length}`;
   updateCartPopup();
 }
+
 function updateCartPopup(){
   let cartItemsDiv = document.getElementById("cartItems");
   cartItemsDiv.innerHTML = "";
@@ -207,10 +137,12 @@ function updateCartPopup(){
   });
   document.getElementById("total").innerText = `Ümumi: ${total.toFixed(2)} AZN`;
 }
+
 document.getElementById("cart").addEventListener("click", ()=>{
   let popup = document.getElementById("cartPopup");
   popup.style.display = popup.style.display === "block" ? "none" : "block";
 });
+
 document.getElementById("checkoutBtn").addEventListener("click", ()=>{
   if(cart.length===0){ alert("Səbət boşdur!"); return; }
   let text = "Salam, sifariş:\n";
@@ -221,7 +153,7 @@ document.getElementById("checkoutBtn").addEventListener("click", ()=>{
 });
 updateCartPopup();
 
-// BACKGROUND TOGGLE
+// TOGGLE BACKGROUND
 let isBlack=true;
 document.getElementById("toggleBg").addEventListener("click", ()=>{
   isBlack = !isBlack;
