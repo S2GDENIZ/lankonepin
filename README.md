@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LANKONEPIN - Gaming Store</title>
+<link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3oW9PFt8LZ8xR7SE8FJa0VW6JL6ba9h7OCg&s" type="image/x-icon">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <style>
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -159,7 +160,7 @@
     <h3 style="font-size: 14px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Səbətiniz</h3>
     <div id="cartItems"></div>
     <div id="total" style="font-size: 14px; font-weight: bold; margin-top: 10px; color: #e7000c;">Ümumi: 0.00 AZN</div>
-    <button onclick="sendOrder()" style="width:100%; padding:10px; background:#000; color:#fff; border:none; border-radius:5px; margin-top:10px; cursor:pointer; font-family:'Orbitron'; font-size:10px;">SİFARİŞİ TAMAMLA</button>
+    <button onclick="prepareOrder()" style="width:100%; padding:10px; background:#000; color:#fff; border:none; border-radius:5px; margin-top:10px; cursor:pointer; font-family:'Orbitron'; font-size:10px;">SİFARİŞİ TAMAMLA</button>
 </div>
 
 <div class="modal-overlay" id="modalOverlay">
@@ -171,19 +172,29 @@
         <button onclick="checkLogin()">DAXİL OL</button>
         <p style="font-size:10px; margin-top:15px; cursor:pointer; color:#777" onclick="switchModal('reg')">Hesabınız yoxdur? Qeydiyyat</p>
     </div>
+    
     <div id="regBox" class="auth-container" style="display:none;">
         <span class="close-modal" onclick="closeModal()">&times;</span>
         <h2 style="color:#ff0000; margin-bottom:15px; font-size: 1.2rem;">QEYDİYYAT</h2>
         <input type="text" id="rName" placeholder="Ad Soyad">
         <input type="email" id="rEmail" placeholder="Gmail">
+        <input type="tel" id="rPhone" placeholder="Telefon Nömrəsi">
         <input type="password" id="rPass" placeholder="Şifrə">
         <button onclick="saveReg()">TAMAMLA</button>
         <p style="font-size:10px; margin-top:15px; cursor:pointer; color:#777" onclick="switchModal('login')">Hesabınız var? Giriş</p>
     </div>
+
+    <div id="checkoutBox" class="auth-container" style="display:none;">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2 style="color:#ff0000; margin-bottom:15px; font-size: 1.2rem;">SİFARİŞİ TAMAMLA</h2>
+        <input type="text" id="cName" placeholder="Ad Soyad">
+        <input type="tel" id="cPhone" placeholder="Telefon Nömrəsi">
+        <input type="text" id="cGameId" placeholder="Oyun ID (və ya link)">
+        <button onclick="submitWhatsApp()">SİFARİŞİ GÖNDƏR</button>
+    </div>
 </div>
 
 <script>
-    // ARXAFON EFFEKTİ
     for(let i=0; i<30; i++){
         let dot = document.createElement("div");
         dot.className="neon-dot";
@@ -193,7 +204,6 @@
         document.getElementById("background").appendChild(dot);
     }
 
-    // KATEQORİYA FUNKSİYASI
     function openCategory(evt, catName) {
         let contents = document.getElementsByClassName("cat-content");
         for (let i = 0; i < contents.length; i++) { contents[i].style.display = "none"; }
@@ -203,7 +213,6 @@
         evt.currentTarget.classList.add("active");
     }
 
-    // SƏBƏT FUNKSİYALARI
     let cart = [];
     function addToCart(name, price){
         cart.push({name, price});
@@ -228,25 +237,73 @@
         let p = document.getElementById("cartPopup");
         p.style.display = p.style.display === "block" ? "none" : "block";
     }
-    function sendOrder() {
+
+    function prepareOrder() {
         if(cart.length === 0) return alert("Səbət boşdur!");
-        let msg = "Yeni Sifariş:\n" + cart.map(i => "- " + i.name).join("\n");
-        window.open("https://wa.me/994557133003?text=" + encodeURIComponent(msg));
+        toggleCartPopup();
+        openModal('checkout');
     }
 
-    // GİRİŞ/QEYDİYYAT SİSTEMİ
+    function submitWhatsApp() {
+        let name = document.getElementById('cName').value;
+        let phone = document.getElementById('cPhone').value;
+        let gameId = document.getElementById('cGameId').value;
+
+        if(!name || !phone || !gameId) {
+            alert("Zəhmət olmasa bütün xanaları doldurun!");
+            return;
+        }
+
+        let msg = `YENİ SİFARİŞ!%0A%0A` +
+                  `Müştəri: ${name}%0A` +
+                  `Telefon: ${phone}%0A` +
+                  `Oyun ID: ${gameId}%0A%0A` +
+                  `Məhsullar:%0A` + 
+                  cart.map(i => "- " + i.name).join("%0A");
+
+        window.open("https://wa.me/994557133003?text=" + msg);
+        closeModal();
+    }
+
     function openModal(type) { document.getElementById('modalOverlay').style.display = 'flex'; switchModal(type); }
     function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
     function switchModal(type) {
         document.getElementById('loginBox').style.display = type === 'login' ? 'block' : 'none';
         document.getElementById('regBox').style.display = type === 'reg' ? 'block' : 'none';
+        document.getElementById('checkoutBox').style.display = type === 'checkout' ? 'block' : 'none';
     }
+    
     function saveReg() {
-        localStorage.setItem("u_email", document.getElementById('rEmail').value);
-        localStorage.setItem("u_pass", document.getElementById('rPass').value);
-        localStorage.setItem("u_name", document.getElementById('rName').value);
-        alert("Qeydiyyat tamamlandı! Giriş edin."); switchModal('login');
+        let name = document.getElementById('rName').value;
+        let email = document.getElementById('rEmail').value;
+        let phone = document.getElementById('rPhone').value;
+        let pass = document.getElementById('rPass').value;
+
+        let emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        if (!emailPattern.test(email)) {
+            alert("Zəhmət olmasa düzgün bir @gmail.com ünvanı daxil edin!");
+            return;
+        }
+
+        let phonePattern = /^[0-9]{10}$/; 
+        if (!phonePattern.test(phone)) {
+            alert("Zəhmət olmasa düzgün telefon nömrəsi daxil edin (məsələn: 0501234567)");
+            return;
+        }
+
+        if (name === "" || pass === "") {
+            alert("Zəhmət olmasa bütün sahələri doldurun!");
+            return;
+        }
+
+        localStorage.setItem("u_email", email);
+        localStorage.setItem("u_pass", pass);
+        localStorage.setItem("u_name", name);
+        localStorage.setItem("u_phone", phone);
+        alert("Qeydiyyat tamamlandı! Giriş edin."); 
+        switchModal('login');
     }
+
     function checkLogin() {
         if(document.getElementById('lEmail').value === localStorage.getItem("u_email") && 
            document.getElementById('lPass').value === localStorage.getItem("u_pass")) {
